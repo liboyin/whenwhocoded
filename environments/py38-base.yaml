@@ -1,0 +1,11 @@
+name: whenwhocoded
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - bokeh
+  - mypy
+  - nomkl
+  - pandas
+  - python~=3.8
+  - tqdm
