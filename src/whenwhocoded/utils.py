@@ -1,24 +1,12 @@
-import logging
-import sys
 from contextlib import contextmanager
-from logging import Logger
+from logging import Logger, getLogger
 from pathlib import Path
 from typing import Generator
 
 
-__all__ = ['get_logger', 'sanitise_for_bokeh', 'split_lines', 'working_dir']
+__all__ = ['sanitise_for_bokeh', 'split_lines', 'working_dir']
 
-
-def get_logger(name: str) -> Logger:
-    handler = logging.StreamHandler(sys.stderr)
-    handler.setFormatter(logging.Formatter('%(asctime)s — %(levelname)s — %(name)s:%(lineno)d:%(funcName)s — %(message)s'))
-    logger = logging.getLogger(name)
-    logger.addHandler(handler)
-    logger.propagate = False
-    logger.setLevel(logging.INFO)
-    return logger
-
-DEFAULT_LOGGER = get_logger(Path(__file__).stem)
+DEFAULT_LOGGER = getLogger(Path(__file__).stem)
 
 
 def sanitise_for_bokeh(text: str) -> str:

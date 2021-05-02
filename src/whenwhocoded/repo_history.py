@@ -1,14 +1,15 @@
 import re
 import subprocess
+from logging import getLogger
 from pathlib import Path
 from typing import Iterable, List, Tuple
 
 import pandas as pd
 
-from .utils import get_logger, sanitise_for_bokeh, split_lines, working_dir
+from .utils import sanitise_for_bokeh, split_lines, working_dir
 
 DIFF_PATTERN = re.compile(r'(\d+) files? changed(, (\d+) insertions?\(\+\))?(, (\d+) deletions?\(\-\))?')
-LOGGER = get_logger(Path(__file__).stem)
+LOGGER = getLogger(Path(__file__).stem)
 
 
 def logged_fetch_cache(p: Path) -> pd.DataFrame:
