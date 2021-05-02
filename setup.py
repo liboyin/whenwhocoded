@@ -13,7 +13,7 @@ setup(
     packages=find_packages(where='src'),
     install_requires=['bokeh', 'pandas', 'tqdm'],
     entry_points={
-        'console_scripts': ['whenwhocoded = whenwhocoded.__main__'],
+        'console_scripts': ['whenwhocoded = whenwhocoded.__main__:main'],
     },
     extras_require={
         'dev': ['mypy'],
