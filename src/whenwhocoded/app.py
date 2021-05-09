@@ -10,5 +10,3 @@ def main() -> None:
     server.start()
     server.io_loop.add_callback(server.show, '/')
     server.io_loop.start()
-
-main()
