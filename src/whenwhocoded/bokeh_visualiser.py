@@ -4,8 +4,6 @@ from typing import Iterable
 import pandas as pd
 from bokeh.plotting import Document, Figure
 
-from .repo_history import main as get_stats
-
 
 def transform(df: pd.DataFrame, limit: int) -> pd.DataFrame:
     import numpy as np
@@ -39,17 +37,19 @@ def render(df: pd.DataFrame) -> Figure:
     return p
 
 
-def main(repo: Path,
-         doc: Document,
+def main(doc: Document,
+         repo: Path,
          include_files: Iterable[str] = (),
          exclude_files: Iterable[str] = (),
          limit: int = 9,
          use_cache: bool = False) -> None:
     from bokeh.models import Panel, Tabs
+    from .repo_history import main as get_stats
     df = get_stats(repo, include_files, exclude_files, use_cache)
     commits_df = df[['author', 'date', 'files']].pivot_table(values='files', index='date', columns='author', aggfunc='count')
     files_df = df[['author', 'date', 'files']].pivot_table(values='files', index='date', columns='author', aggfunc='sum')
     lines_df = df[['author', 'date', 'lines']].pivot_table(values='lines', index='date', columns='author', aggfunc='sum')
+    doc.clear()  # clear the entire document before adding plots
     doc.add_root(Tabs(tabs=[
         Panel(title='Commits', child=render(transform(commits_df, limit))),
         Panel(title='Files', child=render(transform(files_df, limit))),

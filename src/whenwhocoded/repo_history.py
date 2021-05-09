@@ -6,7 +6,7 @@ from typing import Iterable, List, Tuple
 
 import pandas as pd
 
-from .utils import sanitise_for_bokeh, split_lines, working_dir
+from .utils import sanitise_for_bokeh, splitlines_and_strip, working_dir
 
 DIFF_PATTERN = re.compile(r'(\d+) files? changed(, (\d+) insertions?\(\+\))?(, (\d+) deletions?\(\-\))?')
 LOGGER = getLogger(Path(__file__).stem)
@@ -39,7 +39,7 @@ def get_all_commits(author_email: bool = False) -> List[str]:
     LOGGER.debug(f'About to run subprocess: {cmd}')
     result = subprocess.check_output(cmd, shell=True)
     LOGGER.debug(f'Finished running subprocess: {cmd}')
-    return list(split_lines(result.decode()))
+    return list(splitlines_and_strip(result.decode()))
 
 
 def get_diff_line(parent: str, child: str, suffix: str) -> str:
